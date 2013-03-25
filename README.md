@@ -54,8 +54,8 @@ Config loader for Phalcon PHP framework 1.0
 
 ### "Loader"
 ```php
-	...
 	'services' => array(
+		...
 		'loader' => array(
 			'className' => '\Phalcon\Loader',
 			'calls' => array(
@@ -69,14 +69,14 @@ Config loader for Phalcon PHP framework 1.0
 				array('method' => 'register'),
 			),
 		),
+		...
 	),
-	...
 ```
 
 ### "Environment" (Production)
 ```php
-	...
 	'services' => array(
+		...
 		'environment' => function(\Phalcon\Mvc\Application $app) {
 			error_reporting(0);
 			ini_set('log_errors', 1);
@@ -85,14 +85,14 @@ Config loader for Phalcon PHP framework 1.0
 			set_exception_handler(array($app, 'handleException'));
 			set_error_handler(array($app, 'handleError'), error_reporting());
 		},
+		...
 	),
-	...
 ```
 
 ### "Logger"
 ```php
-	...
 	'services' => array(
+		...
 		'logger' => array(
 			'className' => '\Phalcon\Logger\Adapter\Syslog',
 			'arguments' => array(
@@ -100,14 +100,14 @@ Config loader for Phalcon PHP framework 1.0
 			),
 			'shared_instance' => true,
 		),
+		...
 	),
-	...
 ```
 
 ### "Memcache"
 ```php
-	...
 	'services' => array(
+		...
 		'cache' => array(
 			'className' => '\Phalcon\Cache\Backend\Memcache',
 			'arguments' => array(
@@ -119,27 +119,27 @@ Config loader for Phalcon PHP framework 1.0
 			),
 			'shared_instance' => true,
 		),
+		...
 	),
-	...
 ```
 
 ### "Session"
 ```php
-	...
 	'services' => array(
+		...
 		'session' => array(
 			'className' => '\Phalcon\Session\Adapter\Files',
 			'calls' => array(array('method' => 'start')),
 			'shared_instance' => true,
 		),
+		...
 	),
-	...
 ```
 
 ### "Url"
 ```php
-	...
 	'services' => array(
+		...
 		'url' => array(
 			'className' => '\Phalcon\Mvc\Url',
 			'calls' => array(
@@ -149,14 +149,14 @@ Config loader for Phalcon PHP framework 1.0
 			),
 			'shared_instance' => true,
 		),
+		...
 	),
-	...
 ```
 
 ### "View"
 ```php
-	...
 	'services' => array(
+		...
 		'view'   => array(
 			'className' => '\Phalcon\Mvc\View',
 			'calls' => array(
@@ -166,6 +166,6 @@ Config loader for Phalcon PHP framework 1.0
 			),
 			'shared_instance' => true,
 		),
+		...
 	),
-	...
 ```
