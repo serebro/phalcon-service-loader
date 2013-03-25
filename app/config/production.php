@@ -25,7 +25,8 @@ $config = new \Phalcon\Config(array(
 		'environment' => function($app) {
 			error_reporting(0);
 			ini_set('log_errors', 1);
-			ini_set('display_errors', 'off');
+			ini_set('display_errors', 0);
+			ini_set('display_startup_errors', 0);
 			set_exception_handler(array($app, 'handleException'));
 			set_error_handler(array($app, 'handleError'), error_reporting());
 		},
