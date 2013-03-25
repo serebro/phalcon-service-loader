@@ -58,8 +58,12 @@ class PhalconServiceLoader {
 		}
 
 		// force loading
-		$di->getShared('loader');
-		$di->get('environment');
+		if ($di->has('loader')) {
+			$di->getShared('loader');
+		}
+		if ($di->has('environment')) {
+			$di->get('environment');
+		}
 
 		return $app;
 	}
