@@ -49,7 +49,7 @@ Config loader for Phalcon PHP framework 1.0
 #####Reserved
 
 * "services" - services definitions
-* "shared_instances" - register the service as "always shared"
+* "shared_instance" - register the service as "always shared"
 
 
 ### "Loader"
