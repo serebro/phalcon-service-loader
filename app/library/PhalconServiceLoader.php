@@ -166,6 +166,7 @@ class WebApp extends \Phalcon\Mvc\Application {
 			echo '<p>' . $exception->getMessage() . '</p>';
 		}
 
+		$log = $exception->getMessage() . ' (' . $exception->getFile() . ':' . $exception->getLine() . ")\n";
 		if ($this->getDI()->has('logger')) {
 			$this->getDI()->get('logger')->log($log, \Phalcon\Logger::ERROR);
 		} else {
