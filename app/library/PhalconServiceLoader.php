@@ -37,13 +37,13 @@ class PhalconServiceLoader {
 		$app = new $app_class_name($config);
 		$app->setDI($di);
 
-		if (empty($app->config->services)) {
+		if (empty($app->getConfig()->services)) {
 			return $app;
 		}
 
 
 		// configure //
-		foreach($app->config->services as $name => $params) {
+		foreach($app->getConfig()->services as $name => $params) {
 			if (is_callable($params)) {
 				$params = function() use($params, $app) { return $params($app);};
 				$shared_instance = true;
@@ -76,10 +76,14 @@ class PhalconServiceLoader {
 class CliApp extends \Phalcon\CLI\Console {
 
 	/** @var \Phalcon\Config */
-	public $config;
+	private $_config;
 
 	public function __construct(\Phalcon\Config $config) {
-		$this->config = $config;
+		$this->_config = $config;
+	}
+
+	public function getConfig() {
+		return $this->_config;
 	}
 
 	/**
@@ -97,6 +101,7 @@ class CliApp extends \Phalcon\CLI\Console {
 		} else {
 			error_log($message);
 		}
+		echo $exception->getMessage() . PHP_EOL;
 	}
 
 	/**
@@ -131,6 +136,8 @@ class CliApp extends \Phalcon\CLI\Console {
 			} else {
 				error_log($log);
 			}
+
+			echo $log;
 		}
 	}
 }
@@ -142,11 +149,15 @@ class CliApp extends \Phalcon\CLI\Console {
 class WebApp extends \Phalcon\Mvc\Application {
 
 	/** @var \Phalcon\Config */
-	public $config;
+	public $_config;
 
 
 	public function __construct(\Phalcon\Config $config) {
-		$this->config = $config;
+		$this->_config = $config;
+	}
+
+	public function getConfig() {
+		return $this->_config;
 	}
 
 	/**
@@ -209,8 +220,8 @@ class WebApp extends \Phalcon\Mvc\Application {
 			}
 
 			if (APPLICATION_ENV == 'development') {
-				echo '<h1>PHP Error [$code]</h1>';
-				echo '<p>$message ($file:$line)</p>';
+				echo "<h1>PHP Error [$code]</h1>";
+				echo "<p>$message ($file:$line)</p>";
 				echo '<pre>';
 				$trace = debug_backtrace();
 				// skip the first 3 stacks as they do not tell the error position
