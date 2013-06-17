@@ -1,6 +1,6 @@
 Phalcon service loader
 ======================
-Config loader for Phalcon PHP framework 1.0
+Config loader for Phalcon PHP framework 1.1
 
 ## Requirements
 
