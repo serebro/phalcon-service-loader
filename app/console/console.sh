@@ -9,4 +9,13 @@ include_once(APPLICATION_PATH . '/library/PhalconServiceLoader.php');
 
 /** @var $app \Phalcon\CLI\Console */
 $app = \PhalconServiceLoader::createCliApp(APPLICATION_PATH . '/config/console.php');
+
+if ((int)Phalcon\Version::getId() > 1010000) {
+	// Phalcon 1.1
+	array_shift($argv);
+	$task = array_shift($argv);
+	$action = array_shift($argv);
+	$argv = array_merge(array('task' => $task, 'action' => $action), $argv);
+}
+
 $app->handle($argv);
