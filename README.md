@@ -162,12 +162,17 @@ Service loader for Phalcon PHP Framework
 
 ### "View"
 ```php
-	'view'   => [
-		'className' => '\Phalcon\Mvc\View',
-		'calls' => [
-			['method' => 'setViewsDir', 'arguments' => [
-				['type' => 'parameter', 'value' => APP_PATH . '/views/'],
-			]],
-		],
-	],
+    'view'   => [
+        'className' => '\Phalcon\Mvc\View',
+        'calls' => [
+            ['method' => 'setViewsDir', 'arguments' => [
+                ['type' => 'parameter', 'value' => APP_PATH . '/views/'],
+            ]],
+            ['method' => 'registerEngines', 'arguments' => [
+                ['type' => 'parameter', 'value' => [
+                    '.phtml' => 'Phalcon\Mvc\View\Engine\Php',
+                ]],
+            ]],
+        ],
+    ],
 ```
