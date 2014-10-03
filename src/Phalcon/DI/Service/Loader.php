@@ -36,7 +36,7 @@ class Loader extends Injectable
 
         $di = $this->getDI();
         foreach ($services as $name => $params) {
-            if (is_callable($params, true)) {
+            if (!is_string($params) && is_callable($params, true)) {
                 $shared = true;
                 $params = function () use ($params, $di) {
                     return $params($di);

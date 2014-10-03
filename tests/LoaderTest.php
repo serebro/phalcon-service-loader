@@ -49,6 +49,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
         $simple4 = $di->get('simple4');
         $this->assertInstanceOf('\stdClass', $simple4);
+
+        $simple5 = $di->get('simple5');
+        $this->assertInstanceOf('\stdClass', $simple5);
     }
 
     public function testLoad()
