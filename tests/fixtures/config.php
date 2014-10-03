@@ -19,6 +19,10 @@ $services = new \Phalcon\Config([
         'className' => '\stdClass',
         'shared'    => false,
     ],
+    'simple3' => new \stdClass(),
+    'simple4' => function($di) {
+        return new \stdClass();
+    }
 ]);
 
 return $services;

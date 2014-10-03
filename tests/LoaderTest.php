@@ -43,6 +43,12 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\stdClass', $simple2);
         $service = $di->getService('simple2');
         $this->assertFalse($service->isShared());
+
+        $simple3 = $di->get('simple3');
+        $this->assertInstanceOf('\stdClass', $simple3);
+
+        $simple4 = $di->get('simple4');
+        $this->assertInstanceOf('\stdClass', $simple4);
     }
 
     public function testLoad()
