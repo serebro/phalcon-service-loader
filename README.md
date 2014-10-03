@@ -6,6 +6,15 @@ Config loader for Phalcon PHP framework 1.3
 
 * [Phalcon](http://phalconphp.com/)
 
+## Installation
+
+```json
+{
+    "require": {
+        "serebro/phalcon-service-loader": "dev-master"
+    }
+}
+```
 
 ## Get started
 
