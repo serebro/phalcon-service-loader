@@ -1,6 +1,6 @@
 Phalcon service loader
 ======================
-Config loader for Phalcon PHP framework 1.1
+Config loader for Phalcon PHP framework 1.3
 
 ## Requirements
 
@@ -13,33 +13,36 @@ Config loader for Phalcon PHP framework 1.1
 
 ```php
   <?php
-	defined('APPLICATION_PATH') || 
-	define('APPLICATION_PATH', '/app');
+	defined('APP_PATH') || define('APP_PATH', dirname(__FILE__) . '/../app');
+	defined('WEB_PATH') || define('WEB_PATH', dirname(__FILE__));
+	defined('ENV') || define('ENV', getenv('ENV') ? getenv('ENV') : 'development');
 	
-	defined('APPLICATION_ENV') || 
-	define('APPLICATION_ENV', getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development');
-	
-	include_once(APPLICATION_PATH . '/PhalconServiceLoader.php');
+	$config = APP_PATH . '/config/' . ENV . '.php';
 
-	$app = \PhalconServiceLoader::createWebApp(APPLICATION_PATH . '/config.php');
+	//Create a DI
+    $di = new Phalcon\DI\FactoryDefault();
+
+	// Service loading
+    $serviceLoader = new \Phalcon\DI\Service\Loader($di);
+    $serviceLoader->setDefinitions($config, ['loader', 'env']);
+
+	//Handle the request
+	$app = new \Phalcon\Mvc\Application($di);
 	echo $app->handle()->getContent();
 ```
 
-###config.php
+###services.php
 
 ```php
   <?php
-	return new \Phalcon\Config(array(
-		'services' => array(
-			'loader' => array(
-	            // ...
-			),
-			'logger' => array(
-	            // ...
-	            'shared_instance' => true,
-			),
-		),
-	));
+	return new \Phalcon\Config([
+		'loader' => [
+			// ...
+		],
+		'logger' => [
+			// ...
+		],
+	]);
 ```
 	
 ## Phalcon services
@@ -48,124 +51,106 @@ Config loader for Phalcon PHP framework 1.1
 
 #####Reserved
 
-* "services" - services definitions
-* "shared_instance" - register the service as "always shared"
+* "shared" - register the service as "always shared". Default: true.
 
 
 ### "Loader"
 ```php
-	'services' => array(
-		...
-		'loader' => array(
-			'className' => '\Phalcon\Loader',
-			'calls' => array(
-				array('method' => 'registerDirs', 'arguments' => array(
-					array('type' => 'parameter', 'value' => array(
-						'controllers' => APPLICATION_PATH . '/controllers/',
-						'models'      => APPLICATION_PATH . '/models/',
-						'library'     => APPLICATION_PATH . '/library/',
-					))
-				)),
-				array('method' => 'register'),
-			),
-		),
-		...
-	),
+	'loader' => [
+		'className' => '\Phalcon\Loader',
+		'calls' => [
+			['method' => 'registerDirs', 'arguments' => [
+				['type' => 'parameter', 'value' => [
+					'controllers' => APP_PATH . '/controllers/',
+					'models'      => APP_PATH . '/models/',
+					'library'     => APP_PATH . '/library/',
+				]]
+			]],
+			['method' => 'register'],
+		],
+	],
 ```
 
 ### "Environment" (Production)
 ```php
-	'services' => array(
-		...
-		'environment' => function(\Phalcon\Mvc\Application $app) {
-			error_reporting(0);
-			ini_set('log_errors', 1);
-			ini_set('display_errors', 0);
-			ini_set('display_startup_errors', 0);
-			set_exception_handler(array($app, 'handleException'));
-			set_error_handler(array($app, 'handleError'), error_reporting());
-		},
-		...
-	),
+	'env' => function($di) {
+		error_reporting(0);
+		ini_set('log_errors', 1);
+		ini_set('display_errors', 0);
+		ini_set('display_startup_errors', 0);
+	},
 ```
 
 ### "Logger"
 ```php
-	'services' => array(
-		...
-		'logger' => array(
-			'className' => '\Phalcon\Logger\Adapter\Syslog',
-			'arguments' => array(
-				array('type' => 'parameter', 'value' => null),
-			),
-			'shared_instance' => true,
+	'logger' => [
+		'className' => '\Phalcon\Logger\Adapter\Syslog',
+		'arguments' => [
+			['type' => 'parameter', 'value' => null],
 		),
-		...
 	),
+```
+
+### "MySQL"
+
+```php
+	'db' => [
+		'className' => '\Phalcon\Db\Adapter\Pdo\Mysql',
+		'arguments' => [
+			['type' => 'parameter', 'value' => [
+				'host' => 'localhost',
+				'username' => 'root',
+				'password' => 'secret',
+				'dbname' => 'test_db'
+			]],
+		],
+	],
 ```
 
 ### "Memcache"
 ```php
-	'services' => array(
-		...
-		'cache' => array(
-			'className' => '\Phalcon\Cache\Backend\Memcache',
-			'arguments' => array(
-				array(
-					'type' => 'instance', 
-					'className' => '\Phalcon\Cache\Frontend\Data', 
-					'arguments' => array('lifetime' => 60)
-				),
-			),
-			'shared_instance' => true,
-		),
-		...
+	'cache' => [
+		'className' => '\Phalcon\Cache\Backend\Memcache',
+		'arguments' => [
+			[
+				'type' => 'instance',
+				'className' => '\Phalcon\Cache\Frontend\Data',
+				'arguments' => ['lifetime' => 60]
+			],
+		],
 	),
 ```
 
 ### "Session"
 ```php
-	'services' => array(
-		...
-		'session' => array(
-			'className' => '\Phalcon\Session\Adapter\Files',
-			'calls' => array(array('method' => 'start')),
-			'shared_instance' => true,
-		),
-		...
+	'session' => [
+		'className' => '\Phalcon\Session\Adapter\Files',
+		'calls' => [
+			['method' => 'start']
+		],
 	),
 ```
 
 ### "Url"
 ```php
-	'services' => array(
-		...
-		'url' => array(
-			'className' => '\Phalcon\Mvc\Url',
-			'calls' => array(
-				array('method' => 'setBaseUri', 'arguments' => array(
-					array('type' => 'parameter', 'value' => '/'),
-				)),
-			),
-			'shared_instance' => true,
-		),
-		...
-	),
+	'url' => [
+		'className' => '\Phalcon\Mvc\Url',
+		'calls' => [
+			['method' => 'setBaseUri', 'arguments' => [
+				['type' => 'parameter', 'value' => '/'],
+			]],
+		],
+	],
 ```
 
 ### "View"
 ```php
-	'services' => array(
-		...
-		'view'   => array(
-			'className' => '\Phalcon\Mvc\View',
-			'calls' => array(
-				array('method' => 'setViewsDir', 'arguments' => array(
-					array('type' => 'parameter', 'value' => APPLICATION_PATH . '/views/'),
-				)),
-			),
-			'shared_instance' => true,
-		),
-		...
-	),
+	'view'   => [
+		'className' => '\Phalcon\Mvc\View',
+		'calls' => [
+			['method' => 'setViewsDir', 'arguments' => [
+				['type' => 'parameter', 'value' => APP_PATH . '/views/'],
+			]],
+		],
+	],
 ```
