@@ -1,0 +1,25 @@
+{
+  "name": "serebro/phalcon-service-loader",
+  "description": "phalcon service loader",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sergey Ilin",
+      "homepage": "http://github.com/serebro"
+    }
+  ],
+  "version": "2.0",
+  "require": {
+    "php": ">=5.4",
+    "ext-phalcon": ">=1.3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Phalcon": "src"
+    }
+  }
+}
