@@ -1,10 +1,10 @@
 Phalcon service loader
 ======================
-Config loader for Phalcon PHP framework 1.3
+Service loader for Phalcon PHP Framework
 
 ## Requirements
 
-* [Phalcon](http://phalconphp.com/)
+* [Phalcon 1.3](http://phalconphp.com/)
 
 ## Installation
 
