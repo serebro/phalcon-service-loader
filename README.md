@@ -21,7 +21,7 @@ Service loader for Phalcon PHP Framework
 ### index.php
 
 ```php
-  <?php
+<?php
 	defined('APP_PATH') || define('APP_PATH', dirname(__FILE__) . '/../app');
 	defined('WEB_PATH') || define('WEB_PATH', dirname(__FILE__));
 	defined('ENV') || define('ENV', getenv('ENV') ? getenv('ENV') : 'development');
@@ -43,8 +43,11 @@ Service loader for Phalcon PHP Framework
 ###development.php
 
 ```php
-  <?php
+<?php
 	return new \Phalcon\Config([
+		'config' => new \Phalcon\Config([
+			'adminEmail' => 'admin@example.com'
+		]),
 		'loader' => [
 			// ...
 		],
@@ -58,7 +61,7 @@ Service loader for Phalcon PHP Framework
 		}
 	]);
 ```
-	
+
 ## Phalcon services
 
 [See more "DI - complex registration"](http://docs.phalconphp.com/en/latest/reference/di.html#complex-registration)
