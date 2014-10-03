@@ -1,7 +1,6 @@
 {
   "name": "serebro/phalcon-service-loader",
   "description": "phalcon service loader",
-  "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
     {
