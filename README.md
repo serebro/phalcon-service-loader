@@ -101,8 +101,8 @@ Config loader for Phalcon PHP framework 1.3
 		'className' => '\Phalcon\Logger\Adapter\Syslog',
 		'arguments' => [
 			['type' => 'parameter', 'value' => null],
-		),
-	),
+		],
+	],
 ```
 
 ### "MySQL"
@@ -132,7 +132,7 @@ Config loader for Phalcon PHP framework 1.3
 				'arguments' => ['lifetime' => 60]
 			],
 		],
-	),
+	],
 ```
 
 ### "Session"
@@ -142,7 +142,7 @@ Config loader for Phalcon PHP framework 1.3
 		'calls' => [
 			['method' => 'start']
 		],
-	),
+	],
 ```
 
 ### "Url"
