@@ -31,7 +31,7 @@ Config loader for Phalcon PHP framework 1.3
 	echo $app->handle()->getContent();
 ```
 
-###services.php
+###development.php
 
 ```php
   <?php
@@ -41,13 +41,18 @@ Config loader for Phalcon PHP framework 1.3
 		],
 		'logger' => [
 			// ...
+			'shared' => false,
 		],
+		'cache' => function($di) {
+			// ...
+			return $cache;
+		}
 	]);
 ```
 	
 ## Phalcon services
 
-[See more](http://docs.phalconphp.com/en/latest/reference/di.html#complex-registration)
+[See more "DI - complex registration"](http://docs.phalconphp.com/en/latest/reference/di.html#complex-registration)
 
 #####Reserved
 
