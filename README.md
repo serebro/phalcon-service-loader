@@ -138,12 +138,51 @@ Service loader for Phalcon PHP Framework
 	],
 ```
 
+### File cache
+```php
+	'fileCache' => [
+		'className' => '\Phalcon\Cache\Backend\File',
+		'arguments' => [[
+				'type' => 'instance',
+				'className' => '\Phalcon\Cache\Frontend\Data',
+				'arguments' => ['lifetime' => 3600]
+			],[
+				'type' => 'parameter',
+				'value' => ['cacheDir' => APP_PATH . '/../cache/files/']
+			],
+		],
+	],
+```
+
+### File log
+```php
+	'log' => [
+		'className' => '\Phalcon\Logger\Adapter\File',
+		'arguments' => [
+			['type' => 'parameter', 'value' => APP_PATH . '/../logs/app.log'],
+		],
+	],
+```
+
 ### "Session"
 ```php
 	'session' => [
 		'className' => '\Phalcon\Session\Adapter\Files',
 		'calls' => [
 			['method' => 'start']
+		],
+	],
+```
+
+### "Cookie"
+```php
+	'cookie' => [
+		'className' => '\Phalcon\Http\Response\Cookies',
+		'calls' => [[
+			'method' => 'useEncryption',
+			'arguments' => [
+				['type' => 'parameter', 'value' => true],
+			]],
 		],
 	],
 ```
