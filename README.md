@@ -40,7 +40,7 @@ Service loader for Phalcon PHP Framework
 	echo $app->handle()->getContent();
 ```
 
-###development.php
+### services.php
 
 ```php
 <?php
