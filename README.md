@@ -29,11 +29,11 @@ Service loader for Phalcon PHP Framework
 	$services = APP_PATH . '/config/services.php'; // OR $services = APP_PATH . '/config/' . ENV . '.php';
 
 	//Create a DI
-    	$di = new Phalcon\DI\FactoryDefault();
+	$di = new Phalcon\DI\FactoryDefault();
 
 	// Service loading
-    	$serviceLoader = new \Phalcon\DI\Service\Loader($di);
-    	$serviceLoader->setDefinitions($services, ['loader', 'env']);
+	$serviceLoader = new \Phalcon\DI\Service\Loader($di);
+	$serviceLoader->setDefinitions($services, ['loader', 'env']);
 
 	//Handle the request
 	$app = new \Phalcon\Mvc\Application($di);
