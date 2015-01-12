@@ -1,7 +1,7 @@
 Phalcon service loader
 ======================
 Service loader for Phalcon PHP Framework
-8
+
 ## Requirements
 
 * [Phalcon 1.3](http://phalconphp.com/)
