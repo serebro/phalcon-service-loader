@@ -2,6 +2,8 @@ Phalcon service loader
 ======================
 Service loader for Phalcon PHP Framework
 
+[![Phalconist](http://phalconist.com/serebro/phalcon-service-loader/default.svg)](http://phalconist.com/9005383-phalcon-service-loader)
+
 ## Requirements
 
 * [Phalcon 1.3](http://phalconphp.com/)
