@@ -2,6 +2,8 @@ Phalcon service loader
 ======================
 Service loader for Phalcon PHP Framework
 
+[![Phalconist](http://phalconist.com/serebro/phalcon-service-loader/default.svg)](http://phalconist.com/9005383-phalcon-service-loader)
+
 ## Requirements
 
 * [Phalcon 1.3](http://phalconphp.com/)
@@ -26,21 +28,21 @@ Service loader for Phalcon PHP Framework
 	defined('WEB_PATH') || define('WEB_PATH', dirname(__FILE__));
 	defined('ENV') || define('ENV', getenv('ENV') ? getenv('ENV') : 'development');
 	
-	$config = APP_PATH . '/config/' . ENV . '.php';
+	$services = APP_PATH . '/config/services.php'; // OR $services = APP_PATH . '/config/' . ENV . '.php';
 
 	//Create a DI
-    $di = new Phalcon\DI\FactoryDefault();
+	$di = new Phalcon\DI\FactoryDefault();
 
 	// Service loading
-    $serviceLoader = new \Phalcon\DI\Service\Loader($di);
-    $serviceLoader->setDefinitions($config, ['loader', 'env']);
+	$serviceLoader = new \Phalcon\DI\Service\Loader($di);
+	$serviceLoader->setDefinitions($services, ['loader', 'env']);
 
 	//Handle the request
 	$app = new \Phalcon\Mvc\Application($di);
 	echo $app->handle()->getContent();
 ```
 
-###development.php
+### services.php
 
 ```php
 <?php
